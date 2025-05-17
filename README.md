@@ -48,7 +48,7 @@ Maven and Gradle are tools that automate the process of building Java applicatio
 
 •	Package everything into a deployable file (artifact)
 
-**Stage 4: package (build dockerfile, build helm chart, add meta to image, push to AWS ECR)**
+**Stage 4: package (build Dockerfile, build Helm chart, add meta to image, push to AWS ECR)**
 
 •	build_dockerfile - Containerizing the App
 
@@ -66,7 +66,7 @@ Maven and Gradle are tools that automate the process of building Java applicatio
 
 •	Report anything suspicious, just like how antivirus software shows a list of threats.
 
-**Stage 6 : Promote to Dev cluster**
+**Stage 6: Promote to Dev cluster**
 
 •	Create a config.yaml file with terraform version and helm-chart version:
 _service:
@@ -75,13 +75,17 @@ _service:
 terraform:
      version: tf-version_
 
-•	Push the config to another gitlab repo.
+•	Push the config to another GitLab repo.
 
-•	ArgoCD detects a new helm-chart version and starts to deploy it to the dev cluster
+•	ArgoCD detects a new Helm chart version and starts to deploy it to the dev cluster
 
 •	Run post-deployment tests if deployed successfully
 
-•	Check on ArgoCD UI the status of pods, service, sts, cms etc.
+•	Check on ArgoCD UI the status of pods, services, statefulsets, configmaps, etc.
+
+If we need to deploy the dev helm chart to qa (test) environment, we will create a new configuration file for qa and update the version there. This will trigger another pipeline for qa, which takes the dev helm version and deploys to the AWS EKS cluster in qa AWS account.
+
+Similarly, to deploy the qa version to prod, we will have another file for prod configuration, and it will trigger a production pipeline. However, it will also have a manual approval stage to approve the deployment. So, we can say that we are using Continuous Delivery methodology and NOT Continuous Deployment in production.
 
 
 
