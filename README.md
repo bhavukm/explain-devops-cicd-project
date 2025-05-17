@@ -90,7 +90,15 @@ The folder structure of the repo will be something like this:
 ![image](https://github.com/user-attachments/assets/ea816416-3eb2-4d56-ae3f-3596f10758e5)
 
 
-Similarly, to deploy the qa version to prod, we will have another file for prod configuration, and it will trigger a production pipeline. However, it will also have a manual approval stage to approve the deployment. So, we can say that we are using Continuous Delivery methodology and NOT Continuous Deployment in production.
+Similarly, to deploy the qa version to prod, we will have another file for prod configuration, and it will trigger a production pipeline. However, it will also have a manual approval stage to approve the deployment. So, we can say that we are using **Continuous Delivery** methodology and **NOT Continuous Deployment** in production.
+
+**What do you still need to learn so that you can answer questions on this project?**
+
+1. How to use GitLab templates to deploy infrsatructure with Terraform?
+
+2. How to authenticate AWS ECR repositories with ArgoCD?
+
+
 
 
 
