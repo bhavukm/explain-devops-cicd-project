@@ -13,7 +13,7 @@ We are using a GitLab source code repository, which will have all application so
 
 Once the AWS ECR repository has the new helm chart, ArgoCD will deploy that to the AWS EKS Cluster.
 
-For deploying our infrastructure, we utilize Terraform IaC
+For deploying our infrastructure, we utilize Terraform IaC that has been integrated within our CI/CD pipeline to create or modify infrastructure depending on the pipeline stage.
 
 **DevOps Stages explanation:**
 
