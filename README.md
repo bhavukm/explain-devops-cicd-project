@@ -5,7 +5,7 @@
 
 **Explain your company’s business.** For example, Critical Alert Systems, Application for Lawyers, an e-commerce website, a travel portal, etc.
 
-**Application programming language:** Java Springboot framework, python, Drupal etc.
+**Application programming language:** Java Springboot framework, Python, Drupal, etc.
 
 In this example, I am using the following tool stack/methodology:
 
@@ -84,6 +84,35 @@ terraform:
 •	Check on ArgoCD UI the status of pods, services, statefulsets, configmaps, etc.
 
 If we need to deploy the dev helm chart to qa (test) environment, we will create a new configuration file for qa and update the version there. This will trigger another pipeline for qa, which takes the dev helm version and deploys to the AWS EKS cluster in qa AWS account.
+
+The folder structure of the repo will be something like this:
+CICD-Project/
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── travelhero/
+│   │   │           └── flights/
+│   │   │               ├── Application.java
+│   │   │               └── ... (other Java files)
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       └── ... (other resource files)
+│   └── test/
+│       └── java/
+│           └── com/
+│               └── travelhero/
+│                   └── flights/
+│                       └── ... (test files)
+├── dev/
+│   └── config.yaml
+├── qa/
+│   └── config.yaml
+├── prod/
+│   └── config.yaml
+├── .gitlab-ci.yml
+└── README.md
 
 Similarly, to deploy the qa version to prod, we will have another file for prod configuration, and it will trigger a production pipeline. However, it will also have a manual approval stage to approve the deployment. So, we can say that we are using Continuous Delivery methodology and NOT Continuous Deployment in production.
 
