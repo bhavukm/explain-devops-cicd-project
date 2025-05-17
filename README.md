@@ -7,6 +7,14 @@
 
 **Application programming language:** Java Springboot framework, python, Drupal etc.
 
+In this example, I am using the following tool stack/methodology:
+
+We are using a GitLab source code repository, which will have all application source code files, Dockerfiles to build a container image, and then update the helm chart and push both to the AWS ECR repository.
+
+Once the AWS ECR repository has the new helm chart, ArgoCD will deploy that to the AWS EKS Cluster.
+
+For deploying our infrastructure, we utilize Terraform IaC
+
 **DevOps Stages explanation:**
 
 ![image](https://github.com/user-attachments/assets/beba5356-36cf-4fa6-8944-f6a72f7d269d)
