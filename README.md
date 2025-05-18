@@ -54,7 +54,7 @@ Maven and Gradle are tools that automate the process of building Java applicatio
 
 •	add meta to image - tag your docker image: use variables like $AWS_ECR_URI:$commit_id
 
-•	build helm chart – Preparing Kubernetes Deployment
+•	Build helm chart – Preparing Kubernetes Deployment
 
 •	push image and chart to AWS ECR
 
@@ -94,11 +94,16 @@ Similarly, to deploy the qa version to prod, we will have another file for prod 
 
 **What do you still need to learn so that you can answer questions on this project?**
 
-1. How to use GitLab templates to deploy infrsatructure with Terraform?
+1. How do you use GitLab templates to deploy infrastructure with Terraform and AWS EKS?
 
-2. How to authenticate AWS ECR repositories with ArgoCD?
+2. How do we authenticate AWS ECR repositories with ArgoCD?
 
+3. How do we replicate AWS ECR Repositories across accounts?
 
+4. How to set up a single GitLab server to run pipelines across different AWS accounts?
 
+5. How do you manage secrets in CI/CD pipelines?
 
+6. How do you remediate security vulnerabilities found while running the pipeline?
 
+7. How do you manage the Terraform state file?
