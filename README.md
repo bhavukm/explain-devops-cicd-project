@@ -3,6 +3,8 @@
 
 **Interview Question:** Explain the workflow of an End-To-End DevOps CICD Project that you have managed.
 
+**Answer:-**
+
 **Explain your company’s business.** For example, Critical Alert Systems, Application for Lawyers, an e-commerce website, a travel portal, etc.
 
 **Application programming language:** Java Springboot framework, Python, Drupal, etc.
@@ -90,7 +92,7 @@ The folder structure of the repo will be something like this:
 ![image](https://github.com/user-attachments/assets/ea816416-3eb2-4d56-ae3f-3596f10758e5)
 
 
-Similarly, to deploy the qa version to prod, we will have another file for prod configuration, and it will trigger a production pipeline. However, it will also have a manual approval stage to approve the deployment. So, we can say that we are using **Continuous Delivery** methodology and **NOT Continuous Deployment** in production.
+Similarly, to deploy the qa version to prod, we will have another file for prod configuration, and it will trigger a production pipeline. However, it will also have a **Manual Approval** stage to approve the deployment. So, we can say that we are using **Continuous Delivery** methodology and **NOT Continuous Deployment** in production.
 
 **What do you still need to learn so that you can answer questions on this project?**
 
