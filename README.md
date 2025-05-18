@@ -9,11 +9,16 @@
 
 **Application programming language:** Java Springboot framework, Python, Drupal, etc.
 
-In this example, I am using the following tool stack/methodology:
+**Application Layer being managed by the project:** Backend
 
-We are using a GitLab source code repository, which will have all application source code files, Dockerfiles to build a container image, and then update the helm chart and push both to the AWS ECR repository.
+In this example, I am using the following tools stack/methodology:
+
+We are using a GitLab source code repository, which will have all application source code files, a Dockerfile to build a container image, and then update the helm chart and push both to the AWS ECR repository.
 
 Once the AWS ECR repository has the new helm chart, ArgoCD will deploy that to the AWS EKS Cluster.
+
+![image](https://github.com/user-attachments/assets/ecbc050d-6622-46d4-b58f-9fee56bb14a2)
+
 
 For deploying our infrastructure, we utilize Terraform IaC that has been integrated within our CI/CD pipeline to create or modify infrastructure depending on the pipeline stage.
 
