@@ -55,7 +55,7 @@ Maven and Gradle are tools that automate the process of building Java applicatio
 
 •	Package everything into a deployable file (artifact)
 
-**Stage 4: package (build Dockerfile, build Helm chart, add meta to image, push to AWS ECR)**
+**Stage 4: package (build Dockerfile, add meta to image, build Helm chart, push to AWS ECR)**
 
 •	build_dockerfile - Containerizing the App
 
