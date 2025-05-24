@@ -1,0 +1,84 @@
+stages:
+  - platform_check
+  - validate
+  - build
+  - package
+  - scan
+  - deploy_dev
+
+variables:
+  IMAGE_NAME: myapp
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: <aws_account_id>.dkr.ecr.${AWS_REGION}.amazonaws.com
+  K8S_CONTEXT: dev-cluster
+  HELM_CHART_DIR: helm/
+  DOCKER_IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+
+# Stage 1: Platform Check
+check_kubernetes_cluster:
+  stage: platform_check
+  image: bitnami/kubectl:latest
+  script:
+    - echo "Checking Kubernetes cluster context..."
+    - kubectl config use-context $K8S_CONTEXT
+    - kubectl cluster-info
+
+# Stage 2: Validate
+validate_files:
+  stage: validate
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache docker curl bash git
+  script:
+    - echo "Linting Dockerfile..."
+    - hadolint Dockerfile
+    - echo "Validating Kubernetes YAMLs..."
+    - kubeval k8s/
+    - echo "Checking policies..."
+    - echo "Run custom policy validation tools here"
+    - echo "Running Snyk SAST..."
+    - snyk test --all-projects
+
+# Stage 3: Build Artifact
+build_java_artifact:
+  stage: build
+  image: maven:3.8.7-openjdk-17
+  script:
+    - mvn clean package -DskipTests
+
+# Stage 4: Package
+build_and_push_image:
+  stage: package
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - apk add --no-cache curl python3 py3-pip
+    - pip3 install awscli
+    - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
+  script:
+    - docker build -t $IMAGE_NAME:$DOCKER_IMAGE_TAG .
+    - docker tag $IMAGE_NAME:$DOCKER_IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$DOCKER_IMAGE_TAG
+    - docker push $ECR_REGISTRY/$IMAGE_NAME:$DOCKER_IMAGE_TAG
+    - echo "Adding metadata to image (optional custom labeling/tagging)"
+
+package_helm_chart:
+  stage: package
+  image: alpine/helm:3.12.0
+  script:
+    - helm lint $HELM_CHART_DIR
+    - helm package $HELM_CHART_DIR
+
+# Stage 5: Scan Container Image
+scan_image_with_snyk:
+  stage: scan
+  image: snyk/snyk-cli:docker
+  script:
+    - snyk container test $ECR_REGISTRY/$IMAGE_NAME:$DOCKER_IMAGE_TAG
+
+# Stage 6: Deploy to Dev
+deploy_to_dev:
+  stage: deploy_dev
+  image: alpine/helm:3.12.0
+  script:
+    - helm upgrade --install $IMAGE_NAME $HELM_CHART_DIR --namespace dev --set image.repository=$ECR_REGISTRY/$IMAGE_NAME,image.tag=$DOCKER_IMAGE_TAG
